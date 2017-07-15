@@ -3,15 +3,6 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
 Describe "Load-Env-Vars" {
-    Mock Set-Var-In-Dev-Environment
-    It "should really set environment variables defined for a project" {
-        Load-Env-Vars
-        Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Key -eq "SUPPLIER_STAGING_URL"}
-        Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Value -eq "http://sheltered-river-1312.herokuapp.com/salume/supplier"}
-    }
-}
-
-Describe "Load-Env-Vars" {
     $firstKey = "FIRST_ENV_VAR"
     $firstValue = "C:\the\first"
     $secondkey = "SECOND_ENV_VAR"
