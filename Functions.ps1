@@ -1,4 +1,14 @@
-﻿function Load-Env-Vars ([string] $Project) {
+﻿function Load-Env-Vars {
+    [CmdletBinding(DefaultParameterSetName="Project")]
+    param(
+        [Parameter(Mandatory=$true, Position=0, ParameterSetName="Project",
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   HelpMessage="The project name")]
+        [ValidateNotNullOrEmpty()]
+        [string[]]
+        $Project)
+
     $varsFilePath = Get-Vars-File -Project $Project
     $vars = Read-Vars -Path $varsFilePath
     
