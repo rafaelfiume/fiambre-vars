@@ -1,6 +1,6 @@
-﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿$root = Split-Path -Parent $PSScriptRoot
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
-. "$here\$sut"
+. "$root\$sut"
 
 Describe "Load-Env-Vars" {
     $firstKey = "FIRST_ENV_VAR"
@@ -8,6 +8,7 @@ Describe "Load-Env-Vars" {
     $secondkey = "SECOND_ENV_VAR"
     $secondValue = "the_second"
 
+    $projectName = "some-project"
     $projectPath = "C:\a\path\to\a\project"
 
     Mock Get-Vars-File { return $projectPath }
@@ -15,8 +16,9 @@ Describe "Load-Env-Vars" {
     Mock Set-Var-In-Dev-Environment
 
     It "should set environment variables defined for a project" {
-        Load-Env-Vars
+        Load-Env-Vars -Project $projectName
 
+        Assert-MockCalled Get-Vars-File -Scope It -Times 1 -ParameterFilter { $Project -eq $projectName}
         Assert-MockCalled Read-Vars -Scope It -Times 1 -ParameterFilter { $Path -eq $projectPath}
 
         Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Key -eq $firstKey}
@@ -45,7 +47,7 @@ Describe "Get-Vars-File" {
 
         $pathToVarsFile = Get-Vars-File -Project $project
 
-        $expectedPath = Join-Path -Path $PSScriptRoot -ChildPath "env.vars"
+        $expectedPath = Join-Path -Path $root -ChildPath "projects\$($project)\env.vars"
         $pathToVarsFile | Should be $expectedPath
     }
 }

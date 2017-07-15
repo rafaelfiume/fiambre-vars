@@ -1,7 +1,7 @@
-﻿function Load-Env-Vars {
-    Write-Host "Loading prosciutto environment variables..."
-    $varsFilePath = Get-Vars-File -Project "prosciutto"
+﻿function Load-Env-Vars ([string] $Project) {
+    $varsFilePath = Get-Vars-File -Project $Project
     $vars = Read-Vars -Path $varsFilePath
+    
     foreach ($key in $vars.Keys) {
         $val = $vars.$key
         Set-Var-In-Dev-Environment -Key $key -Value $val
@@ -24,7 +24,7 @@ function Set-Var-In-Dev-Environment([string] $Key, [string] $Value) {
 }
 
 function Get-Dir([string] $Project) {
-    $PSScriptRoot
+    Join-Path -Path $PSScriptRoot -ChildPath "projects\$($Project)\"
 }
 
-Load-Env-Vars
+
