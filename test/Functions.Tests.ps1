@@ -9,9 +9,11 @@ Describe "Load-Env-Vars" {
     $secondValue = "the_second"
 
     $projectName = "some-project"
-    $projectPath = "C:\a\path\to\a\project"
+    $varsPath = "C:\a\path\to\a\project\env.vars"
+    $hiddenVarsPath = "C:\a\path\to\a\project\hidden.env.vars"
 
-    Mock Get-Vars-File { return $projectPath }
+    Mock Get-Vars-File { return $varsPath }
+    Mock Get-Hidden-Vars-File { return $hiddenVarsPath }
     Mock Read-Vars { return @{ $firstKey = $firstValue; $secondKey = $secondValue} }
     Mock Set-Var-In-Dev-Environment
 
@@ -19,7 +21,10 @@ Describe "Load-Env-Vars" {
         Load-Env-Vars -Project $projectName
 
         Assert-MockCalled Get-Vars-File -Scope It -Times 1 -ParameterFilter { $Project -eq $projectName}
-        Assert-MockCalled Read-Vars -Scope It -Times 1 -ParameterFilter { $Path -eq $projectPath}
+        Assert-MockCalled Read-Vars -Scope It -Times 1 -ParameterFilter { $Path -eq $varsPath}
+
+        Assert-MockCalled Get-Hidden-Vars-File -Scope It -Times 1 -ParameterFilter { $Project -eq $projectName}
+        Assert-MockCalled Read-Vars -Scope It -Times 1 -ParameterFilter { $Path -eq $hiddenVarsPath}
 
         Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Key -eq $firstKey}
         Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Value -eq $firstValue}

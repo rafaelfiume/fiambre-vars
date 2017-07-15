@@ -9,13 +9,17 @@
         [string[]]
         $Project)
 
-    $varsFilePath = Get-Vars-File -Project $Project
-    $vars = Read-Vars -Path $varsFilePath
-    
+    $vars = Read-Vars -Path (Get-Vars-File -Project $Project)
     foreach ($key in $vars.Keys) {
         $val = $vars.$key
         Set-Var-In-Dev-Environment -Key $key -Value $val
         Write-Host "Added $($key) = $($val)"
+    }
+    
+    $vars = Read-Vars -Path (Get-Hidden-Vars-File -Project $Project)
+    foreach ($key in $vars.Keys) {
+        Write-Host "Maybe adding hidden variables... Who knows?!"
+        Set-Var-In-Dev-Environment -Key $key -Value $vars.$key
     }
 }
 
@@ -27,6 +31,9 @@ function Read-Vars([string] $Path) {
 
 function Get-Vars-File([string] $Project) {
     Join-Path -Path (Get-Dir -Project $Project) -ChildPath "env.vars"
+}
+function Get-Hidden-Vars-File([string] $Project) {
+    Join-Path -Path (Get-Dir -Project $Project) -ChildPath "hidden.env.vars"
 }
 
 function Set-Var-In-Dev-Environment([string] $Key, [string] $Value) {
