@@ -15,7 +15,7 @@
         Set-Var-In-Dev-Environment -Key $key -Value $val
         Write-Host "Added $($key) = $($val)"
     }
-    
+
     $vars = Read-Vars -Path (Get-Hidden-Vars-File -Project $Project)
     foreach ($key in $vars.Keys) {
         Write-Host "Maybe adding hidden variables... Who knows?!"
@@ -25,7 +25,12 @@
 
 function Read-Vars([string] $Path) {
     $vars = @{}
-    Get-Content $path | ForEach-Object {$key,$value = $_.Split("="); $vars.Add($key, $value) }
+
+    Get-Content $path | Where-Object -FilterScript { $_ -like "*=*" } | ForEach-Object {
+        $key,$value = $_.Split("=")
+        $vars.Add($key, $value) 
+    }
+
     $vars
 }
 
