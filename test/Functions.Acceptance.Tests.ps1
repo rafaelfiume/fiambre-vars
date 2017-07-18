@@ -13,6 +13,7 @@ Describe "Load-Env-Vars" {
         Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Key -eq "SUPPLIER_STAGING_URL"}
         Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 1 -ParameterFilter { $Value -eq "http://sheltered-river-1312.herokuapp.com/salume/supplier"}
         Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 0 -ParameterFilter { $Key -eq ""}
+        Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 0 -ParameterFilter { $Value -eq "myPassword"}
     }
 }
 
