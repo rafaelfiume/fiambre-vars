@@ -1,1 +1,9 @@
+# tools
+.vscode
+
+# secret var files
 hidden.*
+
+# vagrant
+environment/*
+!environment/Vagrantfile
