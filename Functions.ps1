@@ -9,6 +9,8 @@
         [string[]]
         $Project)
 
+    Write-Host "Loading $($Project) environment variables..."
+
     $vars = Read-Vars -Path (Get-Vars-File -Project $Project)
     foreach ($key in $vars.Keys) {
         $val = $vars.$key

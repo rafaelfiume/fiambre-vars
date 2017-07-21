@@ -5,15 +5,15 @@ It loads, in a local dev environment, the variables that [Salumeria](https://raf
 
 ### Defining the Environment Variables of a Project
 
-Create a folder with the name of a project in the _projects_ dir (e.g. _prosciutto_). Add the following files:
- * _env.vars_ => for plain environment variables
- * _hidden.env.vars_ => for environment variables with sensitive information.
+Create a folder with the name of a project in the _projects_ directory (e.g. _prosciutto_). Add the following files:
+ * `env.vars` => for plain environment variables
+ * `hidden.env.vars` => for environment variables with sensitive information.
 
-_hidden.env.vars_ files are not stored in the repository, so they need to be added manually in each machine we want to load the variables defined using _fiambre-vars_.
+`hidden.env.vars` files are not stored in the repository, so they need to be added manually in each machine we want to load the variables defined using _fiambre-vars_.
 
 ### Loading the Vars in Windows
 
-In the _fiambre-vars_ project directory, type:
+Open a PowerShell command-line shell, go to ${FIAMBRE_DIR} and type:
 
      λ → .\Load-Env-Vars.ps1 [project]
 
