@@ -56,3 +56,14 @@ Describe "Get-Vars-File" {
         $pathToVarsFile | Should be $expectedPath
     }
 }
+
+Describe "Get-Hidden-Vars-File" {
+    It "should return the path to the hidden.env.vars file of a project" {
+        $project = "prosciutto"
+
+        $pathToVarsFile = Get-Hidden-Vars-File -Project $project
+
+        $expectedPath = Join-Path -Path $root -ChildPath "projects\$($project)\hidden.env.vars"
+        $pathToVarsFile | Should be $expectedPath
+    }
+}
