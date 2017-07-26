@@ -34,15 +34,38 @@ Describe "Load-Env-Vars" {
 }
 
 Describe "Read-Vars" {
-    It "should return as map the vars defined in a file" {
-        $varsFile = "TestDrive:\env.vars"
-        Add-Content $varsFile "FIRST_ENV_VAR=C:\the\first"
-        Add-Content $varsFile "SECOND_ENV_VAR=the_second"
+    $varsFile = "TestDrive:\env.vars"
 
-        $vars = Read-Vars -Path $varsFile
+    Context "Strict developer writing strictly what he/she needs to" {
+        It "should return as map the vars defined in a file" {
+            Add-Content $varsFile "FIRST_ENV_VAR=C:\the\first"
+            Add-Content $varsFile "SECOND_ENV_VAR=the_second"
 
-        $vars."FIRST_ENV_VAR" | Should BeExactly "C:\the\first"
-        $vars."SECOND_ENV_VAR" | Should BeExactly "the_second"
+            $vars = Read-Vars -Path $varsFile
+
+            $vars."FIRST_ENV_VAR" | Should BeExactly "C:\the\first"
+            $vars."SECOND_ENV_VAR" | Should BeExactly "the_second"
+        }
+    }
+
+    Context "Whitespaces are among us" {
+        It "should ignore leading, trailing and intermediate whitespace" {
+            Add-Content $varsFile " FIRST_ENV_VAR    =    C:\the\first "
+
+            $vars = Read-Vars -Path $varsFile
+
+            $vars."FIRST_ENV_VAR" | Should BeExactly "C:\the\first"
+        }
+    }
+
+    Context "Commented vars" {
+        It "should ignore comments (a line starting with #)" {
+            Add-Content $varsFile "######## This is a comment in a vars.file"
+
+            $vars = Read-Vars -Path $varsFile
+
+            $vars.count | Should Be 0
+        }
     }
 }
 
