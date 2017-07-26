@@ -38,6 +38,24 @@ source ./functions.sh
     assert_equal "$vars" "FIRST_ENV_VAR=the/first SECOND_ENV_VAR=the_second"
 }
 
+@test "read_vars() should ignore leading, trailing and intermediate whitespace" {
+    local varsFile=$ENV_VARS_FILE
+    add_content $varsFile "FIRST_ENV_VAR  =  the/first"
+
+    local vars=$(read_vars $varsFile)
+
+    assert_equal "$vars" "FIRST_ENV_VAR=the/first"
+}
+
+@test "read_vars() should ignore comments (a line starting with #)" {
+    local varsFile=$ENV_VARS_FILE
+    add_content $varsFile "# This is a comment in a vars.file"
+
+    local vars=$(read_vars $varsFile)
+
+    assert_equal "$vars" ""
+}
+
 @test "get_vars_file() should return the path to the env.vars file of a project" {
     local project="prosciutto"
 
