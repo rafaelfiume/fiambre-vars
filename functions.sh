@@ -1,5 +1,7 @@
 #!/bin/bash
 
+FIAMBRE_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+
 load_env_vars() {
     local projectName=$1
     printf "Loading $projectName environment variables...\n"
@@ -40,10 +42,10 @@ read_vars() {
 
 get_vars_file() {
     local projectName=$1
-    echo "$(pwd)/projects/"$projectName"/env.vars"
+    echo "$FIAMBRE_DIR/projects/"$projectName"/env.vars"
 }
 
 get_hidden_vars_file() {
     local projectName=$1
-    echo "$(pwd)/projects/"$projectName"/hidden.env.vars"
+    echo "$FIAMBRE_DIR/projects/"$projectName"/hidden.env.vars"
 }

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source functions.sh
+FIAMBRE_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+source $FIAMBRE_DIR/functions.sh
 
 main() {
     project=$1
