@@ -4,6 +4,12 @@ FIAMBRE_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
 load_env_vars() {
     local projectName=$1
+
+    if [ -z "${projectName// }" ]; then
+        printf "Error: project name is missing!\n"
+        exit 1
+    fi
+
     printf "Loading $projectName environment variables...\n"
 
     local envVarsPath=$(get_vars_file $projectName)

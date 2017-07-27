@@ -24,7 +24,7 @@ teardown() {
     assert_line --index 1 "Added SUPPLIER_STAGING_URL=http://sheltered-river-1312.herokuapp.com/salume/supplier"
 }
 
-@test "should check if project argument is valid" {
+@test "should check if project exists" {
     projectName=unknown
 
     run $loadEnvVars $projectName
@@ -32,4 +32,13 @@ teardown() {
     #assert_failure
     assert_line --index 0 "Loading $projectName environment variables..."
     assert_line --index 1 "Cannot find path '$FIAMBRE_DIR/projects/unknown/env.vars' because it does not exist."
+}
+
+@test "should check if project is empty" {
+    projectName=""
+
+    run $loadEnvVars $projectName
+
+    #assert_failure
+    assert_line --index 0 "Error: project name is missing!"
 }
