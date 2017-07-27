@@ -1,4 +1,4 @@
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/rafaelfiume/fiambre-vars/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/rafaelfiume/fiambre-vars.svg?branch=master)](https://travis-ci.org/rafaelfiume/fiambre-vars) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/rafaelfiume/fiambre-vars/blob/master/LICENSE)
 # fiambre-vars
 
 If you have a [12-Factor App](https://12factor.net), you need a way to load its [app's config](https://12factor.net/config) in your development environment. This is what _fiambre-vars does_: it loads the enviroment variables that [Salumeria stack](https://rafaelfiume.com/2013/04/07/dragons-unicorns-and-titans-an-agile-software-developer-tail/) needs to run in a local machine.
