@@ -1,4 +1,6 @@
 language: bash
+sudo: required
+dist: trusty
 
 before_install:
   - curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
@@ -8,3 +10,4 @@ before_install:
 
 script:
     - ./test.sh
+    - powershell -c "Invoke-Pester -EnableExit"
