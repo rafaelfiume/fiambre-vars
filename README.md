@@ -13,7 +13,7 @@ Create a folder with the name of a project in the _projects_ directory (e.g. _pr
 
 ## Linux or Mac OS X
 
-### Loading the Vars in Bash
+### Loading Vars Using Bash Shell
 
 When in the ${FIAMBRE_DIR}, type:
 
@@ -39,7 +39,7 @@ Check [this](https://github.com/rafaelfiume/fiambre-vars/issues/2) out for more 
 
 ## Windows
 
-### Loading the Vars in Windows
+### Loading Vars Using PowerShell
 
 Open a PowerShell command-line shell, go to ${FIAMBRE_DIR} and type:
 
