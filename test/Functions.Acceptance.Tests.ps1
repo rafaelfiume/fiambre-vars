@@ -24,8 +24,17 @@ Describe "Load-Env-Vars" {
     Mock Write-Host
     Mock Set-Var-In-Dev-Environment
 
-    It "should check if project argument is valid" {
+    It "should check if project exists" {
         $projectName = "unknown"
+
+        Load-Env-Vars $projectName
+
+        Assert-MockCalled Write-Host -Scope It -Times 1 -ParameterFilter { $Object -eq "Loading $($projectName) environment variables..." }
+        Assert-MockCalled Set-Var-In-Dev-Environment -Scope It -Times 0
+    }
+
+    It "should check if project is empty" {
+        $projectName = " "
 
         Load-Env-Vars $projectName
 
