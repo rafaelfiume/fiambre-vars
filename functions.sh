@@ -6,15 +6,25 @@ load_env_vars() {
 
     local envVarsPath=$(get_vars_file $projectName)
     if [ ! -f $envVarsPath ]; then
-        printf "Cannot find path \'"$envVarsPath"\' because it does not exist."
+        printf "Cannot find path \'"$envVarsPath"\' because it does not exist.\n"
         exit 1
     fi
-
     local envVars=$(read_vars "$envVarsPath")
     for var in $envVars
     do
-        echo "Added $var"
         export $var
+        echo "Added $var"
+    done
+
+    local hiddenVarsPath=$(get_hidden_vars_file $projectName)
+    if [ ! -f $envVarsPath ]; then
+        exit 0
+    fi
+    local hiddenVars=$(read_vars "$hiddenVarsPath")
+    for hidden in $hiddenVars
+    do
+        export $hidden
+        echo "Maybe adding hidden variable... Who knows?!"
     done
 }
 
